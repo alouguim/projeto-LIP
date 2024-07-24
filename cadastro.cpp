@@ -5,15 +5,15 @@
 #include <random>
 #include <sstream>
 #include <iomanip>
-#include "pessoas.cpp"
 using namespace std;
 
-class Appointment{
-private:
+class CadastroPaciente{
+protected:
 // Instancia o fstream para que seja possivel usar arquivos como banco de dados
     fstream file;
 
 // Variaveis voltadas ao registro do paciente
+private: 
     string Name;
     string PatientId;
     int Age;
@@ -46,7 +46,7 @@ public:
    void historicoMedico();
 };
 
-void Appointment ::cadastrarPacientes() {
+void CadastroPaciente ::cadastrarPacientes() {
     string nome, ID;
     int idade, escolha;
 
@@ -93,7 +93,7 @@ void Appointment ::cadastrarPacientes() {
     }
 }
 
-void Appointment ::registroDePacientes(){
+void CadastroPaciente ::registroDePacientes(){
     string nome, ID, idadeStr;
 
     file.open("db_pacientes.txt", ios ::in);
@@ -122,7 +122,7 @@ void Appointment ::registroDePacientes(){
     file.close();
 }
 
-void Appointment::historicoMedico(){
+void CadastroPaciente::historicoMedico(){
     string nome, ID, idadeStr;
     int idade;
     string searchID;
