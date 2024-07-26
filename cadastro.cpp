@@ -22,8 +22,8 @@ private:
     string Day;
     double Price;
 
-// Private function do generate a Randon ID based on (timestamp + randon number)
-    string randonIdGenerator()
+// Private function do generate a Random ID based on (timestamp + random number)
+    string randomIdGenerator()
     {
         auto now = chrono::system_clock::now();
         auto now_ms = chrono::time_point_cast<chrono::milliseconds>(now);
@@ -64,7 +64,7 @@ void CadastroPaciente ::cadastrarPacientes() {
         cin >> idade;
         cin.ignore();
         cout << "Gerando um ID aleatorio para o paciente!" << endl;
-        ID = randonIdGenerator();
+        ID = randomIdGenerator();
 
         file.open("db_pacientes.txt", ios ::out | ios ::app);
         file << ID << "*" << nome << "*" << idade << endl;
@@ -93,28 +93,32 @@ void CadastroPaciente ::cadastrarPacientes() {
     }
 }
 
-void CadastroPaciente ::registroDePacientes(){
+void CadastroPaciente::registroDePacientes() {
     string nome, ID, idadeStr;
 
-    file.open("db_pacientes.txt", ios ::in);
+    file.open("db_pacientes.txt", ios::in);
 
-    while (true)
-    {
+    while (true) {
         getline(file, ID, '*');
-        getline(file, idadeStr, '*');
-        getline(file, nome, '\n');
+        getline(file, nome, '*');
+        getline(file, idadeStr, '\n');
 
-        if (file.eof())
-        {
+        if (file.eof()) {
             break;
         }
 
-        int idade = stoi(idadeStr);
-
-        cout << "-----------------------------------------------------------" << endl;
-        cout << "ID: " << ID << endl;
-        cout << "Nome: " << nome << endl;
-        cout << "Idade: " << idade << endl;
+        // Verifica se os campos não estão vazios antes de tentar converter
+        if (!ID.empty() && !idadeStr.empty() && !nome.empty()) {
+            try {
+                int idade = stoi(idadeStr);
+                cout << "-----------------------------------------------------------" << endl;
+                cout << "ID: " << ID << endl;
+                cout << "Nome: " << nome << endl;
+                cout << "Idade: " << idade << endl;
+            } catch (const invalid_argument& e) {
+                cerr << "Erro ao converter idade para inteiro: " << idadeStr << endl;
+            }
+        }
     }
 
     cout << "-----------------------------------------------------------" << endl;
@@ -122,7 +126,8 @@ void CadastroPaciente ::registroDePacientes(){
     file.close();
 }
 
-void CadastroPaciente::historicoMedico(){
+
+void CadastroPaciente::historicoMedico() {
     string nome, ID, idadeStr;
     int idade;
     string searchID;
@@ -130,32 +135,33 @@ void CadastroPaciente::historicoMedico(){
     cout << "Digite o ID paciente desejado!" << endl;
     cin >> searchID;
 
-    file.open("db_pacientes.txt", ios ::in);
+    file.open("db_pacientes.txt", ios::in);
 
-    while (true)
-    {
+    while (true) {
         getline(file, ID, '*');
-        getline(file, idadeStr, '*');
-        getline(file, nome, '\n');
+        getline(file, nome, '*');
+        getline(file, idadeStr, '\n');
 
-        if (file.eof())
-        {
+        if (file.eof()) {
             break;
         }
 
-        idade = stoi(idadeStr);
-
-        if(ID == searchID) {
-            cout << "-----------------------------------------------------------" << endl;
-            cout << "ID: " << ID << endl;
-            cout << "Nome: " << nome << endl;
-            cout << "Idade: " << idade << endl;
+        if (ID == searchID) {
+            try {
+                idade = stoi(idadeStr);
+                cout << "-----------------------------------------------------------" << endl;
+                cout << "ID: " << ID << endl;
+                cout << "Nome: " << nome << endl;
+                cout << "Idade: " << idade << endl;
+            } catch (const invalid_argument& e) {
+                cerr << "Erro ao converter idade para inteiro: " << idadeStr << endl;
+            }
         }
-        
     }
 
     cout << "-----------------------------------------------------------" << endl;
 
     file.close();
 }
+
 

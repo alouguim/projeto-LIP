@@ -34,7 +34,7 @@ int main(){
             newEntry.faturamentoMensal();
         case 5:
             // Terminar a execução!!
-            cout << "Obrigado por usar nosso sistema de gerenciamento de agendamentos!!";
+            cout << "Obrigado por usar nosso sistema de gerenciamento de agendamentos!!" << endl;
             break;
         }
     } while (escolha!=5);
